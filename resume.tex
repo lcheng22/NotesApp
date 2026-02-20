@@ -1,0 +1,101 @@
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[top=0.5in, bottom=0.75in, left=0.75in, right=0.75in]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fontenc}
+\usepackage{inputenc}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+\hypersetup{colorlinks=false}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\small\textbf{\textcolor[HTML]{003F8A}{UBC Science Co-op}}}
+\fancyfoot[R]{\small science.coop@ubc.ca\ \textbar\ 604-822-9677}
+
+% Section formatting
+\titleformat{\section}{\bfseries\large}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{8pt}{4pt}
+
+% No paragraph indent
+\setlength{\parindent}{0pt}
+
+% Compact lists
+\setlist[itemize]{noitemsep, topsep=2pt, leftmargin=1.5em}
+
+\begin{document}
+
+% ---------- HEADER ----------
+\begin{center}
+    {\LARGE \textbf{Lester Cheng}} \\[4pt]
+    (778) 302-0038 \quad | \quad \href{mailto:lestercheng3@gmail.com}{lestercheng3@gmail.com}
+\end{center}
+
+% ---------- TECHNICAL SKILLS ----------
+\section*{TECHNICAL SKILLS}
+
+\begin{tabular}{@{}p{3.5cm} l}
+    \textbf{Programming}      & : Java, C, C++, Python, TypeScript/JavaScript \\
+    \textbf{Tools/Environment} & : Visual Studio Code, IntelliJ, Git, GitHub, Figma, Supabase, Prisma \\
+    \textbf{Web}              & : HTML, CSS, Next.js, Flask, React, Tailwind CSS \\
+    \textbf{Databases}        & : PostgreSQL \\
+\end{tabular}
+
+% ---------- PROJECTS ----------
+\section*{PROJECTS}
+
+\noindent\textbf{Note-Taking App (Personal)} $|$ \textit{TypeScript, Next.js, React, Tailwind, PostgreSQL} \hfill Jan. 2026 -- Present
+\begin{itemize}
+    \item Built a full-stack notes application using Next.js App Router with server components and server actions, handling routing, data fetching, and business logic entirely on the server.
+    \item Designed a relational PostgreSQL database schema with Prisma ORM and connection pooling, paired with Supabase Auth for end-to-end secure user data management.
+    \item Integrated Gemini API to enable AI-powered note enhancements including auto-summarization and writing assistance, streamlining user workflows through automated suggestions.
+\end{itemize}
+
+\vspace{4pt}
+\noindent\textbf{Stock Watchlist Web App (Personal)} $|$ \textit{Python, Flask, HTML, CSS} \hfill Nov. 2025 -- Dec. 2025
+\begin{itemize}
+    \item Built a full-stack stocks tracking app allowing users to search, add, and remove ticker symbols from a persistent watchlist.
+    \item Integrated the yfinance API to dynamically fetch and render real-time market metrics, including current pricing, daily fluctuations, volume, and daily highs/lows.
+    \item Designed a RESTful Flask backend utilizing GET/POST routing, session-based flash messaging, and lightweight JSON data persistence.
+\end{itemize}
+
+\vspace{4pt}
+\noindent\textbf{Gamified Study Timer (Hackathon)} $|$ \textit{Figma, TypeScript, CSS, React} \hfill Nov. 2025
+\begin{itemize}
+    \item Worked in a team of four and developed the frontend UI of a productivity application based on the Pomodoro Technique that integrates timed study intervals with gamified break periods.
+    \item Achieved a Top 3 overall placement at HackCamp 2025 by successfully designing, prototyping, and pitching the React interface.
+\end{itemize}
+
+% ---------- WORK EXPERIENCE ----------
+\section*{WORK EXPERIENCE}
+
+\noindent\textbf{Lab Support Technician} $|$ Canadian Food Inspection Agency \hfill Jan. 2023 -- Aug. 2023
+\begin{itemize}
+    \item Performed quality control tests, routine microbiological testing of food commodities, and assisted in the maintenance of quality assurance documents and procedures in the microbiology laboratory.
+\end{itemize}
+
+\vspace{4pt}
+\noindent\textbf{Shift Leader} $|$ Carl's Jr. \hfill May 2018 -- April 2022
+\begin{itemize}
+    \item Managed high-volume shift operations for 100+ daily customers, consistently maintaining high service standards while overseeing cash audits, financial transactions, and store opening and closing protocols.
+\end{itemize}
+
+% ---------- EDUCATION ----------
+\section*{EDUCATION}
+
+\noindent\textbf{Bachelor of Computer Science (BCS), Year 3} \hfill Sep. 2025 -- Present \\
+University of British Columbia, Vancouver, BC \\
+Expected Graduation: May 2028
+
+\vspace{4pt}
+\noindent\textbf{Bachelor of Science, Honours Microbiology \& Immunology} \hfill Sep. 2020 -- May 2025 \\
+University of British Columbia, Vancouver, BC
+
+\end{document}
