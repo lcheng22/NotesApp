@@ -74,7 +74,7 @@ function AuthForm({ type }: Props) {
                 </div>
             </CardContent>
             <CardFooter className="mt-4 flex flex-col gap-6">
-                <Button>
+                <Button className="w-full">
                     {isPending ? <Loader2 className="animate-spin" /> : isLoginForm ? "Login" : "Sign Up"}
                 </Button>
                 <p className="text-xs">

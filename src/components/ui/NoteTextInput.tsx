@@ -38,8 +38,8 @@ function NoteTextInput({ noteId, startingNoteText }: Props) {
         <Textarea
             value={noteText}
             onChange={handleUpdateNote}
-            placeholder="Type your notes here"
-            className="custom-scrollbar mb-4 h-full max-w-4xl resize-none border p-4 placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
+            placeholder="Start writing..."
+            className="custom-scrollbar mb-4 h-full max-w-4xl resize-none rounded-xl border bg-card p-6 text-base leading-relaxed shadow-sm placeholder:text-muted-foreground/50 focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0"
         />
     );
 }

@@ -18,10 +18,15 @@ async function HomePage({searchParams}: Props) {
 
     return (
     
-    <div className="flex h-full flex-col items-center gap-4">
-        <div className="flex w-full max-w-4xl justify-end gap-2">
-        <AskAIButton user={user} />
-        <NewNoteButton user={user} />
+    <div className="flex h-full flex-col items-center gap-3">
+        <div className="flex w-full max-w-4xl items-center justify-between">
+            <p className="text-sm font-medium text-muted-foreground">
+                {note ? "Editing note" : "Select or create a note"}
+            </p>
+            <div className="flex gap-2">
+                <AskAIButton user={user} />
+                <NewNoteButton user={user} />
+            </div>
         </div>
         <NoteTextInput noteId={noteId} startingNoteText={note?.text || ""} />
     </div>

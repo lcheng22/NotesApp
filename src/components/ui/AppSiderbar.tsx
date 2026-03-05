@@ -30,15 +30,11 @@ async function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup />
-        <SidebarGroupLabel className="mb-2 mt-2 text-lg">
+        <SidebarGroupLabel className="px-4 pb-1 pt-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             {user ? (
                 "Your Notes"
             ) : (
-                <p>
-                    <Link href="/login" className="underline">
-                        Login
-                    </Link>{" "}
-                </p>
+                <Link href="/login" className="underline">Login to see notes</Link>
             )}
         </SidebarGroupLabel>
         {user && <SidebarGroupContent notes ={notes} />}
