@@ -34,13 +34,21 @@ function NoteTextInput({ noteId, startingNoteText }: Props) {
         }, debounceTimeout);
     };
 
+    const wordCount = noteText.trim() ? noteText.trim().split(/\s+/).length : 0;
+    const charCount = noteText.length;
+
     return (
-        <Textarea
-            value={noteText}
-            onChange={handleUpdateNote}
-            placeholder="Start writing..."
-            className="custom-scrollbar mb-4 h-full max-w-4xl resize-none rounded-xl border bg-card p-6 text-base leading-relaxed shadow-sm placeholder:text-muted-foreground/50 focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0"
-        />
+        <div className="flex h-full w-full max-w-4xl flex-col gap-1">
+            <Textarea
+                value={noteText}
+                onChange={handleUpdateNote}
+                placeholder="Start writing..."
+                className="custom-scrollbar h-full resize-none rounded-xl border bg-card p-6 text-base leading-relaxed shadow-sm placeholder:text-muted-foreground/50 focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0"
+            />
+            <p className="mb-4 text-right text-xs text-muted-foreground">
+                {wordCount} {wordCount === 1 ? "word" : "words"} · {charCount} {charCount === 1 ? "character" : "characters"}
+            </p>
+        </div>
     );
 }
 
