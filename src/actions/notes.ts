@@ -61,6 +61,24 @@ export const updateNoteAction = async (noteId: string, text: string) => {
     }
 }
 
+export const pinNoteAction = async (noteId: string, isPinned: boolean) => {
+    try {
+        const user = await getUser();
+
+        if (!user) throw new Error("You must be logged in to pin a note");
+
+        await prisma.note.update({
+            where: { id: noteId, authorId: user.id },
+            data: { isPinned },
+        });
+
+        revalidatePath("/", "layout");
+        return { errorMessage: null };
+    } catch (error) {
+        return handleError(error);
+    }
+}
+
 export const deleteNoteAction = async (noteId: string) => {
     try {
         const user = await getUser();

@@ -8,6 +8,7 @@ import { useEffect, useMemo, useState } from "react";
 import Fuse from "fuse.js";
 import SelectNoteButton from "./SelectNoteButton";
 import DeleteNoteButton from "./DeleteNoteButton";
+import PinNoteButton from "./PinNoteButton";
 
 type Props = {
     notes: Note[];
@@ -30,13 +31,25 @@ function SidebarGroupContent({ notes }: Props) {
 
     const filteredNotes = searchText ? fuse.search(searchText).map(r => r.item) : localNotes;
 
+    const sortedNotes = [...filteredNotes].sort((a, b) => {
+        if (a.isPinned === b.isPinned) return 0;
+        return a.isPinned ? -1 : 1;
+    });
+
     const deleteNoteLocally = (noteId: string) => {
         setLocalNotes((prevNotes) =>
-        prevNotes.filter((note) => note.id !== noteId),
-    );
+            prevNotes.filter((note) => note.id !== noteId)
+        );
     };
 
-    console.log(filteredNotes)
+    const pinNoteLocally = (noteId: string, isPinned: boolean) => {
+        setLocalNotes((prevNotes) =>
+            prevNotes.map((note) =>
+                note.id === noteId ? { ...note, isPinned } : note
+            )
+        );
+    };
+
     return <SidebarGrupContentShadCN>
         <div className="relative flex items-center">
             <SearchIcon className="absolute left-2 size-2"/>
@@ -46,17 +59,21 @@ function SidebarGroupContent({ notes }: Props) {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             />
-            </div>
+        </div>
 
-            <SidebarMenu className="mt-4">{filteredNotes.map((note) => (
-                <SidebarMenuItem key={note.id} className="group/item">
+        <SidebarMenu className="mt-4">{sortedNotes.map((note) => (
+            <SidebarMenuItem key={note.id} className="group/item">
                 <SelectNoteButton note={note}/>
-
+                <PinNoteButton
+                    noteId={note.id}
+                    isPinned={note.isPinned}
+                    onPin={pinNoteLocally}
+                />
                 <DeleteNoteButton noteId={note.id}
                 deleteNoteLocally={deleteNoteLocally}/>
-                </SidebarMenuItem>
-            ))}</SidebarMenu>
-        </SidebarGrupContentShadCN>;
+            </SidebarMenuItem>
+        ))}</SidebarMenu>
+    </SidebarGrupContentShadCN>;
 }
 
 export default SidebarGroupContent;

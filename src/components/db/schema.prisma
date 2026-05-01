@@ -18,6 +18,7 @@ model Note {
   id        String   @id @default(uuid())
   title     String   @default("")
   text      String
+  isPinned  Boolean  @default(false)
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
   createdAt DateTime @default(now())

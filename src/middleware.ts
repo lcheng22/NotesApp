@@ -54,30 +54,34 @@ async function updateSession(request: NextRequest) {
     const { data: { user } } = await supabase.auth.getUser();
 
     if (user) {
-      const { newestNoteId } = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/fetch-newest-note?userId=${user.id}`
-      ).then((res) => res.json());
+      try {
+        const newestRes = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/fetch-newest-note?userId=${user.id}`
+        );
+        const { newestNoteId } = newestRes.ok ? await newestRes.json() : {};
 
-      if (newestNoteId) {
-        const url = request.nextUrl.clone()
-        url.searchParams.set("noteId", newestNoteId);
-        return NextResponse.redirect(url);
-      } else {
-        const { noteId } = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/create-new-note?userId=${user.id}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        ).then((res) => res.json());
-
-        if (noteId) {
+        if (newestNoteId) {
           const url = request.nextUrl.clone()
-          url.searchParams.set("noteId", noteId);
+          url.searchParams.set("noteId", newestNoteId);
           return NextResponse.redirect(url);
+        } else {
+          const createRes = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/create-new-note?userId=${user.id}`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+          const { noteId } = createRes.ok ? await createRes.json() : {};
+
+          if (noteId) {
+            const url = request.nextUrl.clone()
+            url.searchParams.set("noteId", noteId);
+            return NextResponse.redirect(url);
+          }
         }
+      } catch {
+        // if API calls fail, continue without redirecting
       }
     }
   }
