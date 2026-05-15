@@ -1,36 +1,137 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Notes App
+
+A full-stack note-taking app with AI-powered chat, markdown support, and real-time auto-save. Built with Next.js 15, Supabase, and Google Gemini.
+
+![Next.js](https://img.shields.io/badge/Next.js-15-black) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supabase-3ecf8e)
+
+## Features
+
+- **Note management** — Create, edit, delete, and pin notes
+- **Auto-save** — Changes are saved automatically with a 1-second debounce
+- **Markdown support** — Write in Markdown and toggle between edit and live preview
+- **AI chat** — Ask questions about your notes using Google Gemini
+- **Fuzzy search** — Find notes instantly by content
+- **Dark / light mode** — Follows system preference with manual toggle
+- **Authentication** — Email/password sign-up and login via Supabase Auth
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 15 (App Router, Server Actions) |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS 4, shadcn/ui, Radix UI |
+| Database | PostgreSQL via Supabase |
+| ORM | Prisma 7 |
+| Auth | Supabase Auth (SSR) |
+| AI | Google Gemini (`@google/generative-ai`) |
+| Markdown | react-markdown + remark-gfm |
+| Search | Fuse.js |
+| Package manager | pnpm |
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- pnpm
+- A [Supabase](https://supabase.com) project with a PostgreSQL database
+- A [Google AI Studio](https://aistudio.google.com) API key for Gemini
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repo-url>
+cd notes-app
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a `.env.local` file in the project root:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+DATABASE_URL=<supabase-pooler-connection-url>
+DIRECT_URL=<supabase-direct-connection-url>
+SUPABASE_URL=<supabase-project-url>
+SUPABASE_PUBLISHABLE_KEY=<supabase-anon-public-key>
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+GEMINI_API_KEY=<google-gemini-api-key>
+```
 
-## Learn More
+You can find `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` in your Supabase project under **Settings → API**. The `DATABASE_URL` and `DIRECT_URL` are under **Settings → Database → Connection string**.
 
-To learn more about Next.js, take a look at the following resources:
+### Database Setup
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run the Prisma migrations to set up the database schema:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm dlx prisma migrate deploy
+```
 
-## Deploy on Vercel
+### Development
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Production
+
+```bash
+pnpm build
+pnpm start
+```
+
+## Project Structure
+
+```
+src/
+├── app/                   # Next.js App Router pages and API routes
+│   ├── page.tsx           # Main note editor
+│   ├── login/             # Login page
+│   ├── sign-up/           # Registration page
+│   └── api/               # REST API routes
+├── actions/               # Next.js Server Actions (notes, auth)
+├── auth/                  # Supabase session helpers
+├── components/
+│   ├── db/                # Prisma client and schema
+│   └── ui/                # App UI components and shadcn primitives
+├── hooks/                 # Custom React hooks
+├── lib/                   # Shared utilities and constants
+├── Providers/             # Theme and note context providers
+└── middleware.ts          # Session refresh and redirect logic
+```
+
+## Database Schema
+
+```prisma
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  notes     Note[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Note {
+  id        String   @id @default(uuid())
+  title     String   @default("")
+  text      String
+  isPinned  Boolean  @default(false)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+```
+
+## Scripts
+
+| Command | Description |
+|---|---|
+| `pnpm dev` | Start the development server with Turbopack |
+| `pnpm build` | Build for production |
+| `pnpm start` | Start the production server |
+| `pnpm lint` | Run ESLint |
