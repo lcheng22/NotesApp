@@ -2,7 +2,6 @@
 
 A full-stack note-taking app with AI-powered chat, markdown support, and real-time auto-save. Built with Next.js 15, Supabase, and Google Gemini.
 
-![Next.js](https://img.shields.io/badge/Next.js-15-black) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supabase-3ecf8e)
 
 ## Features
 
