@@ -126,6 +126,20 @@ model Note {
 }
 ```
 
+## What I Learned
+
+This was my first time building a full-stack app from scratch, so pretty much everything was new to me.
+
+The biggest thing was wrapping my head around the Next.js App Router. I kept reaching for patterns from the Pages Router and had to unlearn a lot. Server Actions in particular felt weird at first. Calling server-side code directly from a component seemed complicated at first but once it clicked it made the whole data flow way simpler.
+
+Auth was harder than I expected. Getting Supabase to work correctly across server components, client components, and middleware took a lot of trial and error. I didn't really understand how cookies worked in Next.js until I had to debug a session that kept getting lost between page loads.
+
+The Gemini integration also taught me a lot about working with external APIs. Specifically, managing API keys safely, keeping them out of the client, and making sure they never end up in version control. 
+
+The auto-save debounce seems simple but I went through a few iterations. My first version was saving on every keystroke and hammering the database. Writing the debounce hook myself instead of reaching for a library helped me actually understand what's happening.
+
+Overall I came away with a much better sense of how the server/client split works in modern React, and how all the pieces (auth, database, API) actually connect in a real project.
+
 ## Scripts
 
 | Command | Description |
